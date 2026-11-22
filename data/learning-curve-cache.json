@@ -1,0 +1,50 @@
+{
+  "contactId": "client-verve-commerce",
+  "clientName": "Verve Commerce",
+  "upcomingAgenda": "Recover overdue INR 44,840 analytics invoice and structure Q1 retainer terms",
+  "generatedAt": "2026-11-22T08:00:00.000Z",
+  "stages": [
+    {
+      "stage": "Stage 1",
+      "timeframe": "Month 1 (Cold Baseline)",
+      "title": "Manual Spreadsheets and Reactive Billing",
+      "trackedEntries": 1,
+      "detectedRisks": 0,
+      "automationAccuracy": "54%",
+      "summary": "Without historical context, invoices are generated manually from chat messages and payment delays are only noticed after weeks pass.",
+      "keyInsights": [
+        "No client payment history indexed yet",
+        "GST set-aside calculated manually at month end",
+        "Follow-ups sent ad hoc with generic templates"
+      ]
+    },
+    {
+      "stage": "Stage 2",
+      "timeframe": "Month 3 (Pattern Detection)",
+      "title": "Receivables Risk Scoring and GST Reserve Tracking",
+      "trackedEntries": 6,
+      "detectedRisks": 2,
+      "automationAccuracy": "86%",
+      "summary": "SoloOps identifies recurring late-payment windows, separates CGST and SGST reserves automatically, and flags overdue invoices before new sprint work starts.",
+      "keyInsights": [
+        "Verve Commerce averages 9 days past due date on analytics milestones",
+        "Input tax credit from software tools offsets 12% of quarterly GST",
+        "Firm follow-up tone resolves overdue retainers 2.1x faster than polite nudges"
+      ]
+    },
+    {
+      "stage": "Stage 3",
+      "timeframe": "Month 6 (Autonomous Back Office)",
+      "title": "Grounded Provenance, UPI QR Settlement, and CFO Forecasting",
+      "trackedEntries": 18,
+      "detectedRisks": 3,
+      "automationAccuracy": "97%",
+      "summary": "Every ledger row links to source chat provenance, invoices embed instant INR UPI QR codes, and the AI CFO ranks portfolio cash-flow risk automatically.",
+      "keyInsights": [
+        "Zero ungrounded invoice dates or missing tax line items",
+        "Instant UPI QR scan reduces client settlement friction",
+        "Clear cash-flow buffer recommendations across active retainers"
+      ]
+    }
+  ]
+}
