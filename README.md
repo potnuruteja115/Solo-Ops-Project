@@ -1,73 +1,125 @@
+```markdown
+<p align="center">
+  <img src="Assets/<img width="1920" height="1080" alt="GigPoint-X-Codebenders-attending-16x9" src="https://github.com/user-attachments/assets/423e5bc0-d14a-4066-ad9a-5cad938abd0b" />
+" alt="SoloOps Banner" width="100%">
+</p>
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js_16-App_Router_%26_API-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js 16">
+  <img src="https://img.shields.io/badge/Groq-llama--3.3--70b-F55036?style=for-the-badge" alt="Groq">
+  <img src="https://img.shields.io/badge/Vectorize-Hindsight_Memory-0052FF?style=for-the-badge" alt="Vectorize Hindsight">
+  <img src="https://img.shields.io/badge/Node.js-v20%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js">
+</p>
+
+<h1 align="center">SoloOps: Autonomous One-Person Back Office</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React 19">
+  <img src="https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS v4">
+  <img src="https://img.shields.io/badge/Recharts-22B5BF?style=for-the-badge" alt="Recharts">
+  <img src="https://img.shields.io/badge/bcryptjs-Auth_%26_Hashing-b8623f?style=for-the-badge" alt="bcryptjs">
+  <img src="https://img.shields.io/badge/GST_%26_UPI_QR-India_Ready-5f7262?style=for-the-badge" alt="GST and UPI QR">
+</p>
+
+---
+
+## Table of Contents
+
+- [Architecture Overview](#architecture-overview)
+- [Core AI & Memory Lifecycles](#core-ai--memory-lifecycles)
+- [Authentication & Security Architecture](#authentication--security-architecture)
+- [Core Capabilities](#core-capabilities)
+- [Setup and Installation](#setup-and-installation)
+- [Error Handling Architecture](#error-handling-architecture)
+- [Running the Automated Test Suite](#running-the-automated-test-suite)
+- [Design System: Claymorphism](#design-system-claymorphism)
+- [Deployment](#deployment)
+
+---
+
 # SoloOps: Autonomous One-Person Back Office
 
-SoloOps turns messy client messages, emails, and expense receipts into structured INR ledger entries, GST tax invoices with UPI QR codes, portfolio receivable risk rankings, and tone-calibrated payment follow-ups.
+> An AI-powered financial operations workspace for solo founders, consultants, and freelancers in India. Powered by **Groq** high-speed inference and **Vectorize Hindsight** persistent memory, SoloOps turns messy client chats, emails, and expense receipts into structured INR ledgers, print-ready GST invoices with scannable UPI QR codes, receivable risk forecasts, and tone-calibrated payment follow-ups.
 
-## Quick Start
+---
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Configure environment variables:
-   ```bash
-   cp .env.local.example .env.local
-   ```
-   Add your `GROQ_API_KEY` inside `.env.local`.
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-4. Open `http://localhost:3000` or jump straight into `http://localhost:3000/app?demo=true`.
+## Architecture Overview
 
-## Features
+SoloOps combines three core layers behind a unified Next.js App Router application:
+1. **Groq (`groq-sdk`)**: Powers structured command-to-ledger extraction, post-call promise extraction, natural-language "Ask Your Books" Q&A, and tone-calibrated payment follow-up drafts using `llama-3.3-70b-versatile`.
+2. **Vectorize Hindsight (`@vectorize-io/hindsight-client`)**: Acts as persistent long-term client memory (`SOLOOPS` bank), retaining call notes, payment promises, and invoice outcomes while supporting `recall()` and `reflect()` queries—with seamless fallback to local history if unconfigured.
+3. **Auth, Ledger & Tax Engine (`lib/*`)**: Provides salted `bcryptjs` authentication, HMAC-SHA256 signed `HttpOnly` sessions, route protection (`proxy.ts`), CGST/SGST tax math, GSTIN check-digit validation, recurring schedules, and CA-ready CSV exports.
 
-**Core**
-- Turn messy messages, emails and receipts into structured INR ledger entries (Groq AI).
-- GST tax invoices with a scannable UPI QR code and your own business details.
-- Client directory with reliability scoring and AI payment follow-ups in four tones.
-- Memory Contrast and Learning Curve views that show what long-term memory (Hindsight) adds.
+```mermaid
+flowchart LR
+    subgraph Client["Next.js Claymorphism Client (Browser)"]
+        direction TB
+        UI_Landing["Landing, Login & Sign Up (/, /login, /register)"]
+        UI_App["9-Tab Workspace (/app)"]
+        UI_Overview["Portfolio Risk Overview (/overview)"]
+        UI_Settings["Studio, GSTIN & UPI Settings (/settings)"]
+    end
 
-**Collections intelligence**
-- **Receivables aging**: unpaid invoices by days overdue, with accrued late fees.
-- **Cash flow forecast**: 30/60/90 days, weighted by each client's reliability.
-- **Smart Collections Queue**: ranked by amount, days overdue and reliability, with a recommended tone that opens the follow-up drawer in one click.
-- **Auto-overdue detection**: unpaid invoices past their due date show as overdue automatically.
+    subgraph Security["Route Protection (proxy.ts)"]
+        Auth_Guard["HMAC Session Cookie Verification<br/>(401 on /api/*, redirect to /login)"]
+    end
 
-**Client Intel** (select a client first)
-- **Payment promise tracker**: kept, broken or pending, with automatic broken status after the due date.
-- **Post-call debrief**: paste call, WhatsApp or email notes; promises, due dates and open questions are extracted and saved to memory.
-- **Promise-adjusted reliability** feeds the forecast and the queue.
-- **Call timeline** and a **Memory Inspector** with Recall and Reflect.
+    subgraph API["Next.js App Router Backend (/api)"]
+        direction TB
+        Route_Auth["/api/auth & /api/settings"]
+        Route_Parse["/api/parse & /api/ledger"]
+        Route_Receivables["/api/receivables, /api/recurring & /api/alerts"]
+        Route_Intel["/api/promises, /api/debrief & /api/memory"]
+        Route_Followup["/api/followup, /api/ask & /api/reports"]
+        Route_Overview["/api/overview, /api/analytics & /api/learning-curve"]
+    end
 
-**Automation and insight**
-- **Recurring invoices**: weekly, monthly or quarterly schedules with correct month-end handling. Running twice never duplicates.
-- **Smart alerts** (bell icon): overdue invoices, broken promises, GSTR-3B reminders near the 20th, client concentration and due schedules.
-- **Analytics**: monthly profit and loss chart, expenses by category and client-concentration risk.
-- **CA report pack**: GST register (CGST/SGST by rate), monthly P&L and aging as CSV.
-- **Ask Your Books**: ask questions about your own data, answered only from it.
-- **Activity log**: an audit trail of every change.
+    subgraph Services["Domain & Orchestration Layer (lib/*)"]
+        direction TB
+        Lib_Auth["auth.ts (bcryptjs + HMAC)"]
+        Lib_Store[("store.ts<br/>data/runtime-ledger.json")]
+        Lib_Finance["pnl.ts, analytics.ts, alerts.ts,<br/>recurring.ts, gstin.ts, csv.ts"]
+        Lib_Promises["promises.ts & activity.ts"]
+    end
 
-**Account and security**
-- Pages and APIs require a login (`proxy.ts`); old `?demo=true` links start a demo session safely.
-- **Settings** page with GSTIN validation (format and check digit), UPI ID, invoice prefix, tax and late-fee defaults.
-- CSV exports quote every cell and neutralise spreadsheet formulas.
+    subgraph Hindsight["Hindsight Memory Platform (Vectorize)"]
+        direction TB
+        HS_Recall["recall(): Past Promises & History"]
+        HS_Reflect["reflect(): Client Reliability Patterns"]
+        HS_Retain["retain(): Call Notes & Outcomes"]
+        HS_Bank[("Memory Bank: 'SOLOOPS'")]
+    end
 
-**Everyday UX**: tabs sync to the URL, `Alt+1` to `Alt+9` switch tabs, `?` shows shortcuts, `Ctrl/Cmd+K` opens the command palette, loading skeletons, auto-dismissing notices and a mobile-friendly layout.
+    subgraph Groq["Groq Cloud Inference"]
+        Groq_LLM["Model: llama-3.3-70b-versatile<br/>(Ledger Parsing, Debriefs, Follow-Ups, Ask)"]
+    end
 
-Demo login: `demo@soloops.app` / `soloops-demo`.
+    UI_Landing --> Route_Auth
+    UI_App --> Auth_Guard
+    UI_Overview --> Auth_Guard
+    UI_Settings --> Auth_Guard
+    Auth_Guard --> API
 
-## Automated Tests
+    Route_Auth --> Lib_Auth
+    Route_Auth --> Lib_Store
+    Route_Parse --> Groq_LLM
+    Route_Parse --> Lib_Store
+    Route_Receivables --> Lib_Finance
+    Route_Receivables --> Lib_Store
+    Route_Intel --> Lib_Promises
+    Route_Intel --> HS_Retain
+    Route_Intel --> HS_Recall
+    Route_Intel --> HS_Reflect
+    Route_Intel --> Groq_LLM
+    Route_Followup --> HS_Recall
+    Route_Followup --> Groq_LLM
+    Route_Followup --> Lib_Finance
+    Route_Overview --> Lib_Finance
+    Route_Overview --> Lib_Store
 
-Start the dev server and run:
-
-```bash
-npm test
-```
-
-This logs in as the demo user and covers route protection, settings validation, recurring invoices, alerts, reports, promises and the activity log.
-
-For a real-browser check of every tab (needs `pip install playwright` and `playwright install chromium`):
-
-```bash
-python3 tests/ui_smoke.py
-```
+    HS_Recall --> HS_Bank
+    HS_Reflect --> HS_Bank
+    HS_Retain --> HS_Bank
