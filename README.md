@@ -1,6 +1,6 @@
 ```markdown
 <p align="center">
-  <img src="Assets/<img width="1920" height="1080" alt="GigPoint-X-Codebenders-attending-16x9" src="https://github.com/user-attachments/assets/423e5bc0-d14a-4066-ad9a-5cad938abd0b" />
+  <img src="Assets/<img width="1920" height="1080" alt="Code_Generated_Image.jpg" src="https://github.com/user-attachments/assets/423e5bc0-d14a-4066-ad9a-5cad938abd0b" />
 " alt="SoloOps Banner" width="100%">
 </p>
 
