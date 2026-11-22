@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Assets/banner.jpg" alt="Code_Generated_Image.jpg" width="100" />
+  <img src="Assets/Code_Generated_Image.jpg" alt="GigPoint x Codebenders Hackathon Banner" width="100" />
 </p>
 
 ---
