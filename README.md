@@ -2,6 +2,8 @@
   <img src="Assets/Code_Generated_Image.jpg" alt="GigPoint x Codebenders Hackathon Banner" width="100%">
 </p>
 
+**🌐 [Live Demo](https://solo-ops-project.onrender.com/)** · [Instant Demo Workspace](https://solo-ops-project.onrender.com/app?demo=true) · [Portfolio Risk Overview](https://solo-ops-project.onrender.com/overview?demo=true)
+
 ---
 
 <p align="center">
