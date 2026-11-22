@@ -1,7 +1,5 @@
-```markdown
 <p align="center">
-  <img src="Assets/<img width="1920" height="1080" alt="Code_Generated_Image.jpg" src="https://github.com/user-attachments/assets/423e5bc0-d14a-4066-ad9a-5cad938abd0b" />
-" alt="SoloOps Banner" width="100%">
+  <img src="Assets/banner.jpg" alt="Code_Generated_Image.jpg" width="750" />
 </p>
 
 ---
@@ -37,6 +35,7 @@
 - [Running the Automated Test Suite](#running-the-automated-test-suite)
 - [Design System: Claymorphism](#design-system-claymorphism)
 - [Deployment](#deployment)
+- [Tags](#tags)
 
 ---
 
